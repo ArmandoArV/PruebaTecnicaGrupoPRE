@@ -9,7 +9,8 @@
     "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
     "test": "jest",
     "test:watch": "jest --watch",
-    "test:e2e": "node tests/e2e/phase1_playwright.mjs"
+    "test:e2e": "node tests/e2e/run.mjs",
+    "test:all": "jest && node tests/e2e/run.mjs"
   },
   "keywords": [],
   "author": "",
