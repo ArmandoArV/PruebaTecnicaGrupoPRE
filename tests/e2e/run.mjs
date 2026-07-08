@@ -36,7 +36,17 @@ const CASES = [
     name: "find-category-notfound",
     path: "/category/999",
     status: 404,
-    check: (b) => b.found === false,
+    check: (b) => b.error?.code === "CATEGORY_NOT_FOUND",
+  },
+  {
+    name: "analyze",
+    path: "/analyze",
+    status: 200,
+    check: (b) =>
+      Array.isArray(b.activeLeafPaths) &&
+      b.totalNodes === 6 &&
+      b.maxDepth === 2 &&
+      Array.isArray(b.anomalies),
   },
 ];
 
