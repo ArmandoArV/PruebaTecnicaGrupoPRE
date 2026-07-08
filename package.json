@@ -8,7 +8,8 @@
     "start": "node dist/server.js",
     "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
     "test": "jest",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "test:e2e": "node tests/e2e/phase1_playwright.mjs"
   },
   "keywords": [],
   "author": "",
@@ -23,6 +24,7 @@
     "@types/node": "^20.14.0",
     "@types/supertest": "^6.0.2",
     "jest": "^29.7.0",
+    "playwright": "^1.61.1",
     "supertest": "^7.0.0",
     "ts-jest": "^29.2.0",
     "ts-node-dev": "^2.0.0",
