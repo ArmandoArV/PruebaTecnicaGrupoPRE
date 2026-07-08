@@ -24,12 +24,12 @@ npm start       # ejecuta dist/server.js
 
 ## Endpoints
 
-| Método    | Ruta                     | Descripción                                  |
-| --------- | ------------------------ | -------------------------------------------- |
-| GET       | `/api/health`            | Healthcheck                                  |
-| GET/POST  | `/api/active-leaf-paths` | Fase 1: rutas de hojas activas               |
-| GET/POST  | `/api/category/:id`      | Fase 2: busca una categoría por ID           |
-| GET/POST  | `/api/analyze`           | Fase 3: reporte + anomalías de la estructura |
+| Método   | Ruta                     | Descripción                                  |
+| -------- | ------------------------ | -------------------------------------------- |
+| GET      | `/api/health`            | Healthcheck                                  |
+| GET/POST | `/api/active-leaf-paths` | Fase 1: rutas de hojas activas               |
+| GET/POST | `/api/category/:id`      | Fase 2: busca una categoría por ID           |
+| GET/POST | `/api/analyze`           | Fase 3: reporte + anomalías de la estructura |
 
 En las rutas `POST` podés enviar tu propia estructura en el body; sin body se
 usa la estructura de ejemplo (`src/sampleStructure.ts`).
@@ -58,12 +58,14 @@ y valida status + payload. Para cubrir un endpoint nuevo, agregá una entrada
 - **Fase 2** — `findCategoryById`: nodo, path, profundidad, `parentId` e `isLeaf`; `null` si no existe.
 - **Fase 3** — `analyzeStructure`: reporte con rutas de hojas activas, conteo de nodos válidos/activos/inactivos, profundidad máxima y lista de anomalías. Tolera datos inválidos y ciclos sin romper.
 
+> **Última fase estable entregada: Fase 3.** La Fase 4 (`moveCategory`) no se implementó por límite de tiempo.
+
 ### Complejidad y árboles profundos (Fase 3)
 
 - **Tiempo:** O(n) — cada nodo se visita una vez; operaciones de `Set` O(1).
 - **Espacio:** O(n) — `Set` de ids + `Set` de objetos visitados + pila de recorrido.
 - **Ciclos:** se detectan por referencia de objeto (`Set<object>`). Un objeto ya visitado no se vuelve a expandir → no hay loop infinito; se emite `CYCLE_DETECTED`.
-- **Profundidad:** el recorrido es **iterativo con pila explícita** (no recursión), por lo que árboles muy profundos no desbordan el call stack (test con 20 000 niveles).
+- **Profundidad:** el recorrido es **iterativo con pila explícita** (no recursivo), por lo que árboles muy profundos no desbordan el call stack (test con 20 000 niveles).
 
 ### Códigos de anomalía
 
